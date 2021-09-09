@@ -1,4 +1,4 @@
-# Installation, Configuration, and Hello World MPI
+# Installation, Configuration, and Hello MPI
 
 Linux Mint 18.3 64-bit
 
@@ -67,7 +67,54 @@ install Open MPI
 ```
 sudo apt-get install openmpi-bin
 ```
-cek Open MPI
+check Open MPI Installation
 ```
 ompi_info
 ```
+
+# Hello MPI
+
+### Save ``hello_mpi.c`` in a directory
+```
+#include <mpi.h>
+#include <stdio.h>
+
+int main(int argc, char* argv[]) {
+
+	int numberOfProcessors;
+	int rank;
+	int namelen;
+	char processor_name[MPI_MAX_PROCESSOR_NAME];
+
+    MPI_Init(&argc,&argv);
+	printf("Hello MPI\r\n");
+
+	MPI_Comm_size(MPI_COMM_WORLD,&numberOfProcessors);
+	printf("Jumlah processor = %d\r\n", numberOfProcessors);
+
+	MPI_Get_processor_name(processor_name, &namelen);
+	printf("Nama Processor = %s\r\n", processor_name);
+
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	printf("Proses pada %d\r\n", rank);	
+
+	MPI_Finalize();
+	return 0;
+
+}
+```
+
+### Compilation
+
+select the directory and compile
+```
+mpicc hello_mpi.c -o hello_mpi -Wall
+```
+
+### Run MPI Apps
+```
+mpiexec -n 2 ./hello_mpi
+```
+
+``-n 2`` for running under 2 pocess
+''mpd &``for ``mpiexec`` failure tracing
