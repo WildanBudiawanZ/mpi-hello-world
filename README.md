@@ -116,5 +116,4 @@ mpicc hello_mpi.c -o hello_mpi -Wall
 mpiexec -n 2 ./hello_mpi
 ```
 
-``-n 2`` for running under 2 pocess
-''mpd &``for ``mpiexec`` failure tracing
+``-n 2`` for running under 2 pocess, ``mpd &``for ``mpiexec`` failure tracing
